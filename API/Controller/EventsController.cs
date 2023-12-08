@@ -66,6 +66,20 @@ namespace API.Controller
 
             return Ok(result);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteEvent(Guid id)
+        {
+            var result = await _db.Calendar.FindAsync(id);
+
+            if (result == null)
+                return NotFound("Event not Found");
+
+            _db.Calendar.Remove(result);
+            await _db.SaveChangesAsync();
+
+            return Ok(result);
+        }
         
     }
 }
