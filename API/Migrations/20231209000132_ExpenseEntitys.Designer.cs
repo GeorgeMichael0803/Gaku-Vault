@@ -3,6 +3,7 @@ using System;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(GakuDb))]
-    partial class GakuDbModelSnapshot : ModelSnapshot
+    [Migration("20231209000132_ExpenseEntitys")]
+    partial class ExpenseEntitys
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.14");
@@ -24,7 +27,6 @@ namespace API.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("EndTime")
@@ -40,7 +42,6 @@ namespace API.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -58,14 +59,15 @@ namespace API.Migrations
                         .HasColumnType("REAL");
 
                     b.Property<string>("Category")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid?>("FinanceUserId")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("NameOrDescription")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("UserId")
@@ -73,7 +75,7 @@ namespace API.Migrations
 
                     b.HasKey("ExpenseId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("FinanceUserId");
 
                     b.ToTable("Expenses");
                 });
@@ -94,7 +96,6 @@ namespace API.Migrations
                         .HasColumnType("REAL");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("UserId");
@@ -106,9 +107,7 @@ namespace API.Migrations
                 {
                     b.HasOne("API.Models.ExpensesEnities.Finance", "Finance")
                         .WithMany("Expenses")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FinanceUserId");
 
                     b.Navigation("Finance");
                 });
