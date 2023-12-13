@@ -15,5 +15,6 @@ namespace API.Models.TutorEntities
         public string Description { get; set; }
         public bool IsAvailable { get; set; }
         public List<Session>? Sessions { get; set; }
+        public List<Review>? Reviews { get; set; }
     }
 }

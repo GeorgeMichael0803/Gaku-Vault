@@ -67,9 +67,9 @@ namespace API.Controller
         }
 
 
-        // PUT: api/tutor/{tutorId}
+        //PUT api/tutor/{tutorId}
         [HttpPut("{tutorId}")]
-        public async Task<IActionResult> UpdateTutorProfile(Guid tutorId, [FromBody] Tutor updatedTutor)
+        public async Task<IActionResult> UpdateTutorProfile(Guid tutorId,Tutor updatedTutor)
         {
             var existingTutor = await _db.Tutors.FirstOrDefaultAsync(t => t.TutorId == tutorId);
             if (existingTutor == null)
@@ -98,5 +98,94 @@ namespace API.Controller
             _db.SaveChanges();
             return Ok(existingTutor);
         }
+
+
+        //POST api/tutor/{tutorId}/schedule
+        [HttpPost("{tutorId}/schedule")]
+        public async Task<IActionResult> ScheduleSession(Guid tutorId, Session session)
+        {
+            var tutor = await _db.Tutors.FindAsync(tutorId);
+
+            if (tutor == null)
+                return NotFound($"Tutor with ID {tutorId} not found.");
+
+            if (!tutor.IsAvailable)
+                return BadRequest("This tutor is currently not available.");
+
+            session.TutorId = tutorId;
+            session.SessionStatus = SessionStatus.Scheduled;
+            //tutor.IsAvailable = false;
+
+            var curentTime= TimeOnly.FromDateTime(DateTime.Now);
+            if(session.Time==curentTime)
+                session.SessionStatus = SessionStatus.Ongoing;
+
+            _db.Sessions.Add(session);
+            await _db.SaveChangesAsync();
+
+
+            return Ok(new 
+            {
+                SessionId = session.SessionId,
+                TutorName = tutor.TutorName,
+                Date = session.Date,
+                Time = session.Time
+            });
+        }
+
+
+        //GET api/tutor/sessions/{tutorId}
+        [HttpGet("sessions/{tutorId}")]
+        public async Task<IActionResult> GetAllSessionsForTutor(Guid tutorId)
+        {
+            var tutor = await _db.Tutors.Include(t => t.Sessions)
+                                        .FirstOrDefaultAsync(t => t.TutorId == tutorId);
+            if (tutor == null)
+                return NotFound($"Tutor with ID {tutorId} not found.");
+    
+
+            return Ok(tutor.Sessions);
+        }
+
+
+        //POST api/tutor/{tutorId}/review
+        [HttpPost("{tutorId}/review")]
+        public async Task<IActionResult> AddReview(Guid tutorId, Review review)
+        {
+            if (review == null)
+                return BadRequest("Review data is required.");
+
+            var tutor = await _db.Tutors.Include(t => t.Reviews)
+                                        .FirstOrDefaultAsync(t => t.TutorId == tutorId);
+            if (tutor == null)
+                return NotFound($"Tutor with ID {tutorId} not found.");
+
+            tutor.Reviews.Add(review); //keep this in mind that the null might need to be chnaged here
+
+            await _db.SaveChangesAsync(); 
+
+            return Ok(review); 
+        }
+
+
+        //PUT api/tutor/session/{sessionId}
+        [HttpPut("session/{sessionId}")]
+        public async Task<IActionResult> CancelSession(Guid sessionId)
+        {
+            var session = await _db.Sessions.FindAsync(sessionId);
+
+            if (session == null)
+                return NotFound("Session with ID not found.");
+
+            if (session.SessionStatus == SessionStatus.Canceled || session.SessionStatus == SessionStatus.Completed)
+                return BadRequest("Session cannot be canceled as it is already completed or canceled.");
+
+            session.SessionStatus = SessionStatus.Canceled;
+
+            await _db.SaveChangesAsync();
+            return Ok("Session has been canceled.");
+        }
+
+        
      }
 }
