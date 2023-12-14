@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.Models;
 using API.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controller
 {
@@ -25,6 +26,29 @@ namespace API.Controller
             await _db.SaveChangesAsync();
 
             return Created("", result);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCourseFeedback(Guid id)
+        {
+            var result = await _db.Feedback.FindAsync(id);
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
+        }
+
+        [HttpGet("Course/{Id}")]
+        public async Task<IActionResult> GetFeedbackByCourse(string id, int pageNumber = 1, int pageSize = 10)
+        {
+            var feedback = await _db.Feedback
+                                    .Where(x => x.CourseId == id)
+                                    .Skip((pageNumber -1) * pageSize)
+                                    .Take(pageSize)
+                                    .ToListAsync();
+
+            return Ok(feedback);
         }
     }
 }
