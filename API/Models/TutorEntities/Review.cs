@@ -1,3 +1,4 @@
+//George Michael 991652543
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,6 +15,7 @@ namespace API.Models.TutorEntities
 
         [ForeignKey("Tutor")]
         public Guid TutorId { get; set; }
-        public Tutor Tutor { get; set; }
+        
+       // public Tutor Tutor { get; set; } //same thing as session
     }
 }

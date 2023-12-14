@@ -18,6 +18,7 @@ namespace API.Models.ExpensesEnities
 
     [ForeignKey("Finance")]
     public Guid UserId { get; set; }
-    public Finance Finance { get; set; } 
+    
+    //public Finance Finance { get; set; } 
     }
 }

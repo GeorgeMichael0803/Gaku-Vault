@@ -21,9 +21,9 @@ namespace API.Controllers
         private GakuDb _db = new GakuDb();
 
 
-        //POST expenses/finance
+        //POST expenses/finance    //check
         [HttpPost("finance")]
-        public async Task<IActionResult> CreateFinance(Finance finance)
+        public async Task<IActionResult> CreateFinance(Finance finance)   
         {
             //todo: validation -> either [required] in model or ErrorResponse Method
 
@@ -36,9 +36,18 @@ namespace API.Controllers
         }
 
         //POST expenses
+        // same thing as sessions error
         [HttpPost]
         public async Task<IActionResult> CreateExpense(Expense expense)
         {
+            // Check if the Finance record exists
+            var financeRecord = await _db.Finances.FindAsync(expense.UserId);
+            if (financeRecord == null)
+                return NotFound($"Finance record with UserId not found.");
+
+            // Link the Expense to the Finance record
+            expense.UserId = financeRecord.UserId;
+
             //todo: validation -> either [required] in model or ErrorResponse Method
             await _db.AddAsync(expense);
             await _db.SaveChangesAsync();
@@ -113,8 +122,8 @@ namespace API.Controllers
         }
 
 
-        //DELETE /api/expense/deleteById{expenseId}
-        [HttpDelete("deleteById{expenseId}")]
+        //DELETE /api/expense/deleteById{expenseId}     //edit the code so that it delets the expsnes based on the user specific 
+        [HttpDelete("deleteById{expenseId}")]    
         public async Task<IActionResult> DeleteExpenseById(Guid expenseId)
         {
 

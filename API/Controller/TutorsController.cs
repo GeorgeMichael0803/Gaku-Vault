@@ -1,3 +1,4 @@
+//George Michael 991652543
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace API.Controller
         private GakuDb _db = new GakuDb();
 
 
-        //POST api/tutor
+        //POST api/tutor   //check
         [HttpPost]
         public async Task<IActionResult> CreateTutor (Tutor tutor)
         {
@@ -26,6 +27,7 @@ namespace API.Controller
 
             await _db.AddAsync(tutor);
             await _db.SaveChangesAsync();
+
             return Ok( new {
                 UserName = tutor.TutorName,
                 UserId = tutor.TutorId
@@ -34,9 +36,9 @@ namespace API.Controller
         }
 
 
-        //Get api/tutor/byCourse?course=prog
+        //Get api/tutor/available/byCourse?course=prog   //check  
         [HttpGet("available/byCourse")]
-        public async Task<IActionResult> GetAvailableTutorByCourse ([FromBody] string course)
+        public async Task<IActionResult> GetAvailableTutorByCourse ([FromQuery] string course)
         {
             if(string.IsNullOrWhiteSpace(course))
                 return BadRequest("Course is required");
@@ -46,7 +48,8 @@ namespace API.Controller
             return Ok(availableTutorsByCourse);
         }
 
-        //GET api/tutor/{tutorId}
+        //GET api/tutor/{tutorId}   //check
+        [HttpGet("{tutorId}")]
         public async Task<IActionResult> GetTutorById (Guid tutorId)
         {
             var tutor = await _db.Tutors.FirstOrDefaultAsync(x=>x.TutorId==tutorId);
@@ -57,7 +60,8 @@ namespace API.Controller
         }
 
 
-        //GET api/tutor
+        //GET api/tutor   ///check
+        [HttpGet]
         public async Task<IActionResult> GetAllTutors()
         {
             var tutors = await _db.Tutors.ToListAsync();
@@ -67,8 +71,8 @@ namespace API.Controller
         }
 
 
-        //PUT api/tutor/{tutorId}
-        [HttpPut("{tutorId}")]
+        //PATCH api/tutor/{tutorId}    //check
+        [HttpPatch("{tutorId}")]
         public async Task<IActionResult> UpdateTutorProfile(Guid tutorId,Tutor updatedTutor)
         {
             var existingTutor = await _db.Tutors.FirstOrDefaultAsync(t => t.TutorId == tutorId);
@@ -97,10 +101,22 @@ namespace API.Controller
 
             _db.SaveChanges();
             return Ok(existingTutor);
+
+
+
+
+                // {
+                // "Email":"tester@gmail.com",
+                // "Course": "",
+                // "TutorName":"",
+                // "Description": "",
+                // "PhoneNumber":"",
+                // "isAvailable":true
+                // }
         }
 
 
-        //POST api/tutor/{tutorId}/schedule
+        //POST api/tutor/{tutorId}/schedule           //check
         [HttpPost("{tutorId}/schedule")]
         public async Task<IActionResult> ScheduleSession(Guid tutorId, Session session)
         {
@@ -134,7 +150,7 @@ namespace API.Controller
         }
 
 
-        //GET api/tutor/sessions/{tutorId}
+        //GET api/tutor/sessions/{tutorId}    //check
         [HttpGet("sessions/{tutorId}")]
         public async Task<IActionResult> GetAllSessionsForTutor(Guid tutorId)
         {
@@ -148,7 +164,7 @@ namespace API.Controller
         }
 
 
-        //POST api/tutor/{tutorId}/review
+        //POST api/tutor/{tutorId}/review     //check
         [HttpPost("{tutorId}/review")]
         public async Task<IActionResult> AddReview(Guid tutorId, Review review)
         {
@@ -168,8 +184,8 @@ namespace API.Controller
         }
 
 
-        //PUT api/tutor/session/{sessionId}
-        [HttpPut("session/{sessionId}")]
+        //PUT api/tutor/session/{sessionId}     //check
+        [HttpPatch("session/{sessionId}")]
         public async Task<IActionResult> CancelSession(Guid sessionId)
         {
             var session = await _db.Sessions.FindAsync(sessionId);
@@ -183,6 +199,7 @@ namespace API.Controller
             session.SessionStatus = SessionStatus.Canceled;
 
             await _db.SaveChangesAsync();
+
             return Ok("Session has been canceled.");
         }
 
