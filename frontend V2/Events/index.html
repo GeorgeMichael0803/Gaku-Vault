@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Manager</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+    <div class="form-wrapper">
+        <h2>Event Manager</h2>
+        <form id="eventForm">
+            <div class="form-group">
+                <label for="eventTitle">Event Title:</label>
+                <input type="text" id="eventTitle" name="eventTitle" placeholder="Event Title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="eventDescription">Event Description:</label>
+                <textarea id="eventDescription" name="eventDescription"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="eventStartTime">Start Time:</label>
+                <input type="datetime-local" id="eventStartTime" name="eventStartTime" required>
+            </div>
+
+            <div class="form-group">
+                <label for="eventEndTime">End Time:</label>
+                <input type="datetime-local" id="eventEndTime" name="eventEndTime" required>
+            </div>
+
+            <div class="form-group">
+                <label for="eventReminder">Set Reminder:</label>
+                <input type="checkbox" id="eventReminder" name="eventReminder">
+            </div>
+
+            <div class="form-group">
+                <label for="eventRecurring">Recurring Event:</label>
+                <input type="checkbox" id="eventRecurring" name="eventRecurring">
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save Event" class="submit-button">
+            </div>
+
+            <div id="eventsDisplay" class="events-display">
+                <h3>Events:</h3>
+                <div id="eventsDetails"></div>
+            </div>
+        </form>
+        <!-- List of Events -->
+        <div id="eventList" class="event-list"></div>
+    </div>
+</body>
+</html>
