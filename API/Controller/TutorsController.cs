@@ -154,8 +154,8 @@ namespace API.Controller
         [HttpGet("sessions/{tutorId}")]
         public async Task<IActionResult> GetAllSessionsForTutor(Guid tutorId)
         {
-            var tutor = await _db.Tutors.Include(t => t.Sessions)
-                                        .FirstOrDefaultAsync(t => t.TutorId == tutorId);
+            var tutor = await _db.Tutors.Include(x => x.Sessions)
+                                        .FirstOrDefaultAsync(x => x.TutorId == tutorId);
             if (tutor == null)
                 return NotFound($"Tutor with ID {tutorId} not found.");
     
@@ -171,8 +171,8 @@ namespace API.Controller
             if (review == null)
                 return BadRequest("Review data is required.");
 
-            var tutor = await _db.Tutors.Include(t => t.Reviews)
-                                        .FirstOrDefaultAsync(t => t.TutorId == tutorId);
+            var tutor = await _db.Tutors.Include(x => x.Reviews)
+                                        .FirstOrDefaultAsync(x => x.TutorId == tutorId);
             if (tutor == null)
                 return NotFound($"Tutor with ID {tutorId} not found.");
 
