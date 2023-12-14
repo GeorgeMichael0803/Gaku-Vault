@@ -50,5 +50,18 @@ namespace API.Controller
 
             return Ok(feedback);
         }
+
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> DeleteFeedback(Guid id)
+        {
+            var result = await _db.Feedback.FindAsync(id);
+            if (result == null)
+                return NotFound();
+            _db.Feedback.Remove(result);
+
+            await _db.SaveChangesAsync();
+
+            return Ok(result);
+        }
     }
 }
