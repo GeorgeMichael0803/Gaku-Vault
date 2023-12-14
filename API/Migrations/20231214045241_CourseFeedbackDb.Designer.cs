@@ -3,6 +3,7 @@ using System;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(GakuDb))]
-    partial class GakuDbModelSnapshot : ModelSnapshot
+    [Migration("20231214045241_CourseFeedbackDb")]
+    partial class CourseFeedbackDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.14");
@@ -93,9 +96,6 @@ namespace API.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("FinanceUserId")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("NameOrDescription")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -105,7 +105,7 @@ namespace API.Migrations
 
                     b.HasKey("ExpenseId");
 
-                    b.HasIndex("FinanceUserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Expenses");
                 });
@@ -225,27 +225,35 @@ namespace API.Migrations
 
             modelBuilder.Entity("API.Models.ExpensesEnities.Expense", b =>
                 {
-                    b.HasOne("API.Models.ExpensesEnities.Finance", null)
+                    b.HasOne("API.Models.ExpensesEnities.Finance", "Finance")
                         .WithMany("Expenses")
-                        .HasForeignKey("FinanceUserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Finance");
                 });
 
             modelBuilder.Entity("API.Models.TutorEntities.Review", b =>
                 {
-                    b.HasOne("API.Models.TutorEntities.Tutor", null)
+                    b.HasOne("API.Models.TutorEntities.Tutor", "Tutor")
                         .WithMany("Reviews")
                         .HasForeignKey("TutorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Tutor");
                 });
 
             modelBuilder.Entity("API.Models.TutorEntities.Session", b =>
                 {
-                    b.HasOne("API.Models.TutorEntities.Tutor", null)
+                    b.HasOne("API.Models.TutorEntities.Tutor", "Tutor")
                         .WithMany("Sessions")
                         .HasForeignKey("TutorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Tutor");
                 });
 
             modelBuilder.Entity("API.Models.ExpensesEnities.Finance", b =>

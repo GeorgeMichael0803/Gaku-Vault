@@ -11,6 +11,7 @@ namespace API.Services
 {
     public class GakuDb : DbContext
     {
+        public DbSet<CourseFeedback> Feedback {get; set;}
         public DbSet<Events> Calendar { get; set; }
         public DbSet<Expense> Expenses { get; set; }
         public DbSet<Finance> Finances { get; set; }
