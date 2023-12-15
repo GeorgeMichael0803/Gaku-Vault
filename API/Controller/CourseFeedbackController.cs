@@ -18,14 +18,16 @@ namespace API.Controller
         [HttpPost]
         public async Task<IActionResult> GiveFeedback(CourseFeedback feedback)
         {
-            var result = await _db.Feedback.AddAsync(feedback);
-
-            if (result == null)
-                return BadRequest();
-            
-            await _db.SaveChangesAsync();
-
-            return Created("", result);
+            try
+            {
+                await _db.Feedback.AddAsync(feedback);
+                await _db.SaveChangesAsync();
+                return Created("",feedback);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error: " + ex.Message);
+            }
         }
 
         [HttpGet("{id}")]
