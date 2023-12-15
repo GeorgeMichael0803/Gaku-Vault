@@ -29,10 +29,11 @@ namespace API.Controllers
 
             await _db.AddAsync(finance);
             await _db.SaveChangesAsync();
-            return Ok( new {
-                UserName = finance.UserName,
-                UserId = finance.UserId
-            });
+            return Ok(finance );
+            // new {
+            //     UserName = finance.UserName,
+            //     UserId = finance.UserId
+            // }
         }
 
         //POST expenses
@@ -52,10 +53,12 @@ namespace API.Controllers
             await _db.AddAsync(expense);
             await _db.SaveChangesAsync();
 
-            return Ok( new {
-                ExpenseId = expense.ExpenseId,
-                NameOrDescription = expense.NameOrDescription
-            });
+            return Ok( expense);
+
+            // new {
+            //     ExpenseId = expense.ExpenseId,
+            //     NameOrDescription = expense.NameOrDescription
+            // }
         }
 
 

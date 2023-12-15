@@ -18,7 +18,7 @@ namespace API.Controller
         private GakuDb _db = new GakuDb();
 
 
-        //POST api/tutor   //check
+        //POST api/tutors   //check
         [HttpPost]
         public async Task<IActionResult> CreateTutor (Tutor tutor)
         {
@@ -28,10 +28,7 @@ namespace API.Controller
             await _db.AddAsync(tutor);
             await _db.SaveChangesAsync();
 
-            return Ok( new {
-                UserName = tutor.TutorName,
-                UserId = tutor.TutorId
-            });
+            return Ok( tutor);
 
         }
 
@@ -71,7 +68,7 @@ namespace API.Controller
         }
 
 
-        //PATCH api/tutor/{tutorId}    //check
+        //PATCH api/tutors/{tutorId}    //check
         [HttpPatch("{tutorId}")]
         public async Task<IActionResult> UpdateTutorProfile(Guid tutorId,Tutor updatedTutor)
         {
@@ -111,12 +108,12 @@ namespace API.Controller
                 // "TutorName":"",
                 // "Description": "",
                 // "PhoneNumber":"",
-                // "isAvailable":true
+                //"isAvailable":true
                 // }
         }
 
 
-        //POST api/tutor/{tutorId}/schedule           //check
+        //POST api/tutors/{tutorId}/schedule           //check
         [HttpPost("{tutorId}/schedule")]
         public async Task<IActionResult> ScheduleSession(Guid tutorId, Session session)
         {
@@ -140,17 +137,11 @@ namespace API.Controller
             await _db.SaveChangesAsync();
 
 
-            return Ok(new 
-            {
-                SessionId = session.SessionId,
-                TutorName = tutor.TutorName,
-                Date = session.Date,
-                Time = session.Time
-            });
+            return Ok(session);
         }
 
 
-        //GET api/tutor/sessions/{tutorId}    //check
+        //GET api/tutors/sessions/{tutorId}    //check
         [HttpGet("sessions/{tutorId}")]
         public async Task<IActionResult> GetAllSessionsForTutor(Guid tutorId)
         {
@@ -201,6 +192,21 @@ namespace API.Controller
             await _db.SaveChangesAsync();
 
             return Ok("Session has been canceled.");
+        }
+
+
+        [HttpDelete("{tutorId}")]
+        public async Task<IActionResult> DeleteTutor(Guid tutorId)
+        {
+            var tutor = await _db.Tutors.FindAsync(tutorId);
+
+            if (tutor == null)
+                return NotFound($"Tutor with ID {tutorId} not found.");
+
+             _db.Tutors.Remove(tutor);
+            await _db.SaveChangesAsync();
+
+            return Ok("Tutor profile has been deleted");
         }
 
         
