@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor Sessions</title>
+    <link rel="stylesheet" href="tutor-sessions.css">
+</head>
+<body>
+    <h1>Get all Sessions of the tutor</h1>
+    <input type="text" id="tutorId" placeholder="Enter Tutor ID">
+    <button onclick="fetchSessions()">Get Sessions</button>
+    <table id="sessionsTable">
+        <thead>
+            <tr>
+                <th>Session ID</th>
+                <th>Student Name</th>
+                <th>Student ID</th>
+                <th>Date</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Session rows will be inserted here -->
+        </tbody>
+    </table>
+
+    <script src="tutor-sessions.js"></script>
+</body>
+</html>

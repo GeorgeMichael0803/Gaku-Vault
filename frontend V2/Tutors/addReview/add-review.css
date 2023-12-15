@@ -1,0 +1,40 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f7f7f7;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+}
+
+#reviewForm {
+    background: #fff;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#reviewForm input, #reviewForm textarea {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#reviewForm button {
+    width: 100%;
+    padding: 10px;
+    background-color: #5cb85c;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#reviewForm button:hover {
+    background-color: #4cae4c;
+}

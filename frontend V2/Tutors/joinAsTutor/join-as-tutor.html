@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Create Tutor</title>
+    <link rel="stylesheet" href="join-as-tutor.css">
+    <script src="join-as-tutor.js"></script>
+</head>
+<body>
+    <div class="form-wrapper">
+        <h2>Tutor Registration Form</h2>
+        <form id="tutorForm">
+            <!-- Tutor Name -->
+            <div class="form-group">
+                <label for="tutorName">Tutor Name:</label>
+                <input type="text" id="tutorName" name="tutorName" autocomplete="off" required>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" autocomplete="off" required>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" placeholder="xxx-xxx-xxxx" autocomplete="off" required>
+            </div>
+
+            <!-- Course -->
+            <div class="form-group">
+                <label for="course">Course:</label>
+                <input type="text" id="course" name="course" autocomplete="off" required>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" autocomplete="off" required></textarea>
+            </div>
+
+            <!-- Is Available -->
+            <div class="form-group">
+                <label for="isAvailable">Is Available:</label>
+                <input type="checkbox" id="isAvailable" name="isAvailable" value="true">
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group">
+                <input type="submit" value="Submit" class="submit-button">
+            </div>
+        </form>
+
+        <!-- Response Message -->
+        <div id="responseMessage"></div>
+    </div>
+
+
+</body>
+</html>

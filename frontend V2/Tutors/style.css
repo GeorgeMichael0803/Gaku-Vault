@@ -1,19 +1,46 @@
-.button-container {
-    display: flex;
-    flex-direction: column;
-    width: 200px;
-    margin: auto;
-    align-items: center;
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
 }
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding-top: 50px;
+}
+
+.title {
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.button-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    padding: 20px;
+}
+
 .button {
-    margin: 10px;
-    padding: 10px;
+    padding: 15px;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
 }
+
 .button:hover {
     background-color: #0056b3;
+}
+
+@media (max-width: 600px) {
+    .button-container {
+        width: 100%;
+    }
 }

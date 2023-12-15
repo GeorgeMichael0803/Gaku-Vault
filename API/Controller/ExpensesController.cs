@@ -29,16 +29,16 @@ namespace API.Controllers
 
             await _db.AddAsync(finance);
             await _db.SaveChangesAsync();
-            return Ok( new {
-                UserName = finance.UserName,
-                UserId = finance.UserId
-            });
+            return Ok(finance);
+            // new {
+            //     UserName = finance.UserName,
+            //     UserId = finance.UserId
+            // }
         }
 
-        //POST expenses
-        // same thing as sessions error
+        //POST api/expenses
         [HttpPost]
-        public async Task<IActionResult> CreateExpense(Expense expense)
+        public async Task<IActionResult> CreateExpense(Expense expense)   //ISO 8601 format
         {
             // Check if the Finance record exists
             var financeRecord = await _db.Finances.FindAsync(expense.UserId);
@@ -52,14 +52,16 @@ namespace API.Controllers
             await _db.AddAsync(expense);
             await _db.SaveChangesAsync();
 
-            return Ok( new {
-                ExpenseId = expense.ExpenseId,
-                NameOrDescription = expense.NameOrDescription
-            });
+            return Ok( expense);
+
+            // new {
+            //     ExpenseId = expense.ExpenseId,
+            //     NameOrDescription = expense.NameOrDescription
+            // }
         }
 
 
-        // Get api/expenses/summary{userId}
+        // Get api/expenses/summary/{userId}   //This does not work
         [HttpGet("summary/{userId}")]
         public async Task<IActionResult> GetSummary(Guid userId)
         {
@@ -68,17 +70,22 @@ namespace API.Controllers
 
             if(user == null)
                 return NotFound("User not found");
-
-            var totalExpenses = user.Expenses.Sum(x=> x.Amount);
+            var userExpenses =  _db.Expenses.Where(x => x.UserId==userId).Sum(x=> x.Amount);
+            //var totalExpenses = user.Expenses.Sum(x=> x.Amount);
             var totalIncome = user.BiWeeklySalary1 + user.BiWeeklySalary2;
-            var remainingBudget = user.MonthlyBudget - totalExpenses;
+            var remainingBudget = user.MonthlyBudget - userExpenses;
 
-            return Ok( new{
-                TotalExpenses = totalExpenses,
+            var result =new{
+                TotalExpenses = userExpenses,
                 TotalIncome = totalIncome,
                 RemainingBudget = remainingBudget
-            });
+            };
+
+            return Ok( result);
         }
+
+
+
 
 
         //GET api/expenses/{userId}
@@ -122,15 +129,17 @@ namespace API.Controllers
         }
 
 
-        //DELETE /api/expense/deleteById{expenseId}     //edit the code so that it delets the expsnes based on the user specific 
-        [HttpDelete("deleteById{expenseId}")]    
-        public async Task<IActionResult> DeleteExpenseById(Guid expenseId)
+        // DELETE /api/expenses/{userId}/deleteById/{expenseId}      //no string or special characters
+        [HttpDelete("{userId}/deleteById/{expenseId}")]
+        public async Task<IActionResult> DeleteExpenseById(Guid userId, Guid expenseId)
         {
+            // Find the expense with the given expenseId and userId
+            var expense = await _db.Expenses
+                                .Where(x => x.ExpenseId == expenseId && x.UserId == userId)
+                                .FirstOrDefaultAsync();
 
-            var expense = await _db.Expenses.FindAsync(expenseId);
-
-            if(expense==null)
-                return NotFound("Expense does not exist");
+            if(expense == null)
+                return NotFound("Expense does not exist or does not belong to the given user");
 
             _db.Expenses.Remove(expense);
             await _db.SaveChangesAsync();
@@ -138,23 +147,29 @@ namespace API.Controllers
             return Ok("Expense has been deleted");
         }
 
-        //DELETE /api/expense/deleteByName{nameOrDescription}
-        [HttpDelete("deleteByName{nameOrDescription}")]
-        public async Task<IActionResult> DeleteExpenseByNameOrDescription(string nameOrDescription)
+
+        // DELETE /api/expense/{userId}/deleteByName/{nameOrDescription}
+        [HttpDelete("{userId}/deleteByName/{nameOrDescription}")]
+        public async Task<IActionResult> DeleteExpenseByNameOrDescription(Guid userId, string nameOrDescription)
         {
+            var expense = await _db.Expenses
+                                .Where(x => x.UserId == userId && x.NameOrDescription.ToLower() == nameOrDescription.ToLower())
+                                .FirstOrDefaultAsync();
 
-            var expense = await _db.Expenses.FirstOrDefaultAsync(x=> x.NameOrDescription == nameOrDescription);
-
-            if(expense==null)
-                return NotFound("Expense does not exist");
+            if(expense == null)
+            {
+                return NotFound("Expense does not exist or does not belong to the user.");
+            }
 
             _db.Expenses.Remove(expense);
             await _db.SaveChangesAsync();
 
-            return Ok("Expense has been deleted");
+            return Ok("Expense has been deleted.");
         }
 
-        //DELETE api/expense/finance/{userId}
+
+
+        //DELETE api/expenses/finance/{userId}
         [HttpDelete("finance/{userId}")]
         public async Task<IActionResult> DeleteUserById (Guid userId)
         {
@@ -174,7 +189,7 @@ namespace API.Controllers
 
 
 
-        //DELETE api/expense/finance/byName/{userName}
+        //DELETE api/expenses/finance/byName/{userName}
         [HttpDelete("finance/byName/{userName}")]
         public async Task<IActionResult> DeleteUserByNameOrDescription (string userName)
         {
@@ -213,4 +228,44 @@ namespace API.Controllers
         // public async Task<IActionResult> UpdateUser(Guid expenseId, Finance Finace)
         // {
         //     return Ok();
+        // }
+
+
+
+        //         //DELETE /api/expense/deleteById{expenseId}     //edit the code so that it delets the expsnes based on the user specific 
+        // [HttpDelete("deleteById{expenseId}")]    
+        // public async Task<IActionResult> DeleteExpenseById(Guid expenseId)
+        // {
+
+        //     var expense = await _db.Expenses.FindAsync(expenseId);
+
+        //     if(expense==null)
+        //         return NotFound("Expense does not exist");
+
+        //     _db.Expenses.Remove(expense);
+        //     await _db.SaveChangesAsync();
+
+        //     return Ok("Expense has been deleted");
+        // }
+
+
+
+
+
+
+        
+        // //DELETE /api/expenses/deleteByName{nameOrDescription}
+        // [HttpDelete("deleteByName{nameOrDescription}")]
+        // public async Task<IActionResult> DeleteExpenseByNameOrDescription(string nameOrDescription)
+        // {
+
+        //     var expense = await _db.Expenses.FirstOrDefaultAsync(x=> x.NameOrDescription == nameOrDescription);
+
+        //     if(expense==null)
+        //         return NotFound("Expense does not exist");
+
+        //     _db.Expenses.Remove(expense);
+        //     await _db.SaveChangesAsync();
+
+        //     return Ok("Expense has been deleted");
         // }

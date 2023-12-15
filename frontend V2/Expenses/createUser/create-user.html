@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Finance User</title>
+    <link rel="stylesheet" href="create-user.css">
+</head>
+<body>
+    <form id="createFinanceForm">
+        <label for="userName">User Name:</label>
+        <input type="text" id="userName" required>
+
+        <label for="monthlyBudget">Monthly Budget:</label>
+        <input type="number" id="monthlyBudget" step="0.01" required>
+
+        <label for="biWeeklySalary1">Bi-Weekly Salary 1:</label>
+        <input type="number" id="biWeeklySalary1" step="0.01" required>
+
+        <label for="biWeeklySalary2">Bi-Weekly Salary 2:</label>
+        <input type="number" id="biWeeklySalary2" step="0.01" required>
+
+        <button type="submit">Create User</button>
+    </form>
+
+    <script src="create-user.js"></script>
+</body>
+</html>
