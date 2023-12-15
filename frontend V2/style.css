@@ -53,3 +53,60 @@ footer {
 }
 
 
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #f8f8f8;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#logo {
+    height: 50px; /* Or any other size you prefer */
+}
+
+h1 {
+    margin-left: 20px; /* Adjust the space between logo and title */
+    flex-grow: 1; /* Allows the title to push navigation links to the sides */
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%; /* Ensure the navigation fills the header */
+}
+
+nav ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li:not(:last-child) {
+    margin-right: 20px; /* Spacing between links, adjust as needed */
+}
+
+nav ul li:last-child {
+    margin-left: auto; /* Pushes the last item to the right */
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #007bff; /* Or any other color for hover state */
+}
+
+
+footer {
+    width: 100%; /* Full width */
+    position: fixed; /* Fix the position to the bottom of the viewport */
+    bottom: 0; /* Align to the bottom */
+    text-align: center;
+    padding: 10px 0; /* Some padding */
+}
