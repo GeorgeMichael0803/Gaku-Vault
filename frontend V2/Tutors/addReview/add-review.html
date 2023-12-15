@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Review</title>
+    <link rel="stylesheet" href="add-review.css">
+</head>
+<body>
+    <h1>Add a Review for a Tutor</h1>
+    <form id="reviewForm">
+        <input type="text" id="tutorId" placeholder="Enter Tutor ID" required>
+        <textarea id="reviewDescription" placeholder="Enter review description" required></textarea>
+        <input type="number" id="rating" placeholder="Enter rating (1-5)" min="1" max="5" required>
+        <button type="submit">Submit Review</button>
+    </form>
+
+    <script src="add-review.js"></script>
+</body>
+</html>

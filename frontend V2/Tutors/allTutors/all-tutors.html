@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Tutors</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Optional: include your custom stylesheet after Bootstrap to override styles if needed -->
+    <link rel="stylesheet" href="all-tutors.css">
+</head>
+<body>
+    <div class="container mt-5">
+    
+        <h1 class="text-center mb-4">Tutor Search Options</h1>
+
+        <div class="row mb-3">
+            <div class="col">
+                <h3>Search by Course</h3>
+                <input type="text" id="courseSearch" class="form-control" placeholder="Enter course name">
+                <button id="searchByCourse" class="btn btn-primary mt-2">Get Tutors by Course</button>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <h3>Search by ID</h3>
+                <input type="text" id="tutorIdSearch" class="form-control" placeholder="Enter Tutor ID">
+                <button id="searchById" class="btn btn-primary mt-2">Get Tutor by ID</button>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <h3>View All Tutors</h3>
+                <button id="searchAll" class="btn btn-success mt-2">Get All Tutors</button>
+            </div>
+        </div>
+
+        <h5 class="mt-5 mb-3">Tutor List</h5>
+        <div class="table-responsive">
+            <table id="tutorsTable" class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <!-- Table headers will be populated dynamically -->
+                </thead>
+                <tbody>
+                    <!-- Table body will be populated with tutor data -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS and its dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.9.11/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="all-tutors.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+/* Custom styles if you want to override Bootstrap */
+#tutorsTable th, #tutorsTable td {
+    text-align: center;
+}
+
+/* Style for custom messages */
+.success-message {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.error-message {
+    color: #dc3545;
+    font-weight: bold;
+}

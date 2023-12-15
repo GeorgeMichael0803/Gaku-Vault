@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Tutor Profile</title>
+    <link rel="stylesheet" href="update-tutor-profile.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Update Tutor Profile</h1>
+        <form id="updateTutorForm">
+            <div class="form-group">
+                <label for="tutorId">Tutor ID (GUID):</label>
+                <input type="text" id="tutorId" name="tutorId" required placeholder="Enter Tutor ID">
+            </div>
+
+            <div class="form-group">
+                <label for="tutorName">Tutor Name:</label>
+                <input type="text" id="tutorName" name="tutorName">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+            </div>
+
+            <div class="form-group">
+                <label for="phoneNumber">Phone Number:</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" placeholder="xxx-xxx-xxxx">
+            </div>
+
+            <div class="form-group">
+                <label for="course">Course:</label>
+                <input type="text" id="course" name="course">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="isAvailable">Is Available:</label>
+                <input type="checkbox" id="isAvailable" name="isAvailable">
+            </div>
+
+            <button type="submit" id="updateTutorButton">Update Profile</button>
+        </form>
+        <div id="apiResponse">
+            <table id="responseTable">
+                <!-- Table will be populated here -->
+            </table>
+        </div>
+    </div>
+    <script src="update-tutor-profile.js"></script>
+</body>
+</html>
