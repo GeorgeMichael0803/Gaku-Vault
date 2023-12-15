@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Feedback Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Course Feedback</h1>
+        <form id="feedbackForm" class="feedback-form">
+            <div class="form-group">
+                <label for="courseId">Course ID:</label>
+                <input type="text" id="courseId" name="courseId" required>
+            </div>
+
+            <div class="form-group">
+                <label for="studentId">Student ID:</label>
+                <input type="text" id="studentId" name="studentId" required>
+            </div>
+
+            <div class="star-rating">
+                <span class="star" data-value="5">☆</span>
+                <span class="star" data-value="4">☆</span>
+                <span class="star" data-value="3">☆</span>
+                <span class="star" data-value="2">☆</span>
+                <span class="star" data-value="1">☆</span>
+                <input type="hidden" id="rating" name="rating" value="">
+            </div>
+
+            <div class="form-group">
+                <label for="feedback">Feedback:</label>
+                <textarea id="feedback" name="feedback" required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">Submit Feedback</button>
+        </form>
+
+        <div id="feedbackDisplay" class="feedback-display">
+            <h2>Submitted Feedback:</h2>
+            <div id="feedbackDetails"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

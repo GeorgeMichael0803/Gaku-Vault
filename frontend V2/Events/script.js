@@ -1,8 +1,8 @@
-let currentUpdatingEventId = null; // To track the event currently being updated
+let currentUpdatingEventId = null; 
 
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('eventForm').addEventListener('submit', submitEvent);
-    fetchEvents(); // Fetch events when the page loads
+    fetchEvents(); 
 });
 
 function submitEvent(e) {
@@ -18,10 +18,10 @@ function submitEvent(e) {
     };
 
     if (currentUpdatingEventId) {
-        // Update existing event
+        
         submitUpdatedEvent(currentUpdatingEventId, eventData);
     } else {
-        // Create new event
+        
         fetch('http://localhost:5000/api/events', {
             method: 'POST',
             headers: {
@@ -130,7 +130,7 @@ function displayEvents(events) {
 }
 
 function resetForm() {
-    // Reset each form field to its default value
+    
     document.getElementById('eventTitle').value = '';
     document.getElementById('eventDescription').value = '';
     document.getElementById('eventStartTime').value = '';
@@ -138,10 +138,10 @@ function resetForm() {
     document.getElementById('eventReminder').checked = false;
     document.getElementById('eventRecurring').checked = false;
 
-    // Reset the currentUpdatingEventId to null
+    
     currentUpdatingEventId = null;
 
-    // Change the form submission back to creating a new event
+    
     document.getElementById('eventForm').onsubmit = submitEvent;
 }
 
